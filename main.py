@@ -14,9 +14,9 @@ while True :
     
     
     lowerLimit, upperLimit =get_limit(color=yellow)
-    mask = cv2.inRange(hsvImage,) 
+    mask = cv2.inRange(hsvImage,lowerLimit,upperLimit)
     
-    cv2.imshow("Frame",frame)
+    cv2.imshow("Frame",mask)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
