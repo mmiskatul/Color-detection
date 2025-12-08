@@ -1,9 +1,9 @@
 import cv2
 from util import get_limit
+from PIL import Image
 
 
-
-yellow = [0,255,255] # yellow in RGB Colorspace 
+yellow = [0,255,255] # yellow in RGB Colorspace
 cap =cv2.VideoCapture(0)
 
 while True :
@@ -15,8 +15,15 @@ while True :
     
     lowerLimit, upperLimit =get_limit(color=yellow)
     mask = cv2.inRange(hsvImage,lowerLimit,upperLimit)
-    
-    cv2.imshow("Frame",mask)
+
+    mask_ =Image.fromarray(mask)
+
+    bbox =mask_.getbbox()
+
+    if bbox is not None:
+        x1, y1, x2, y2 = bbox
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5 )
+    cv2.imshow("Frame",frame)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
